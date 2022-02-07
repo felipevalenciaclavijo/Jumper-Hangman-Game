@@ -31,11 +31,12 @@ class Parachute:
              "^^^^^^^^^"]
              
     def get_parachute(self):
-        text = ""
+        text = " \n"
         if self._strings_cut >= 5:
             text = text + "    X    \n"
             for line in self._parachute[6:]:
                 text = text + (line + "\n")
+            
         else:
             for line in self._parachute[self._strings_cut:]:
                 text = text + (line + "\n")

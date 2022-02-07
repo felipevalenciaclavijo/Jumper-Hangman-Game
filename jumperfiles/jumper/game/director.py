@@ -27,7 +27,7 @@ class Director:
         self._guesser = Guesser()
         self._terminal_service = TerminalService()
         self._parachute = Parachute()
-        self._word_line = []
+        
         
     def start_game(self):
         """Starts the game by running the main game loop.
@@ -35,8 +35,11 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        self._word_line()
-        self._terminal_service.write_text(self._parachute.get_parachute)
+               
+        self._terminal_service.write_text('Welcome to Jumper! Guess the word before all parachute lines are cut.')
+
+        self._word_line(self._word_generator.get_split_generated_word(), self._guesser.get_guesses())
+        self._terminal_service.write_text(self._parachute.get_parachute())
         while self._is_playing:
             self._get_inputs()
             self._do_updates()
@@ -48,8 +51,8 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        guess = self._terminal_service.read_text("\nGuess a letter [a-z]:  ")
-        self._guesser.collect_guesses(self, guess)
+        guess = self._terminal_service.read_text("\nGuess a letter [a-z]:  \n")
+        self._guesser.collect_guesses(guess)
 
     def play_again(self):
 
@@ -67,7 +70,7 @@ class Director:
             self (Director): An instance of Director.
         """
         if self._guesser.get_guesses()[-1] not in self._word_generator.get_generated_word():
-            self.__parachute.cut_string()
+            self._parachute.cut_string()
         
     def _do_outputs(self):
         """Prints an instance of the Parachute.
@@ -76,12 +79,18 @@ class Director:
             self (Director): An instance of Director.
         """
 
-        self._word_line()
+        self._word_line(self._word_generator.get_split_generated_word(), self._guesser.get_guesses())
 
-        self._terminal_service.write_text(self._parachute.get_parachute)
+        self._terminal_service.write_text(self._parachute.get_parachute())
 
-    def _word_line(self):
-        self._word_line = [x if x not in self._word_generator.get_generated_word() else "_" for x in self._guesser.get_guesses()]
+    def _word_line(self, word_letters, guess_list):
+        
+        word_display = ""
+        for letter in word_letters:
+            if letter in guess_list:
+                word_display += f" {letter}"
 
-        for i in self._word_line:
-            print(i, end= " ")
+            else:
+                word_display += " _"
+        
+        self._terminal_service.write_text(word_display)

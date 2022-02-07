@@ -15,13 +15,13 @@ class Word_generator:
 
         return self.__generate_word
 
-    def set_new_word(self):
-
-        self.__generate_word = random.choice(self.__words)
-
-    def split_word(self):
+   
+    def get_split_generated_word(self):
         
-        return [char for char in self.__generate_word]
+        generated_word_letters = list(self.__generate_word)
+        return generated_word_letters
+        
+        
 
     def get_word_length(self):
         return len(self.__generate_word)

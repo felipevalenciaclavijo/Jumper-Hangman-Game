@@ -10,7 +10,7 @@ class Guesser:
         
     """
 
-    def __init__(self, word):
+    def __init__(self):
         """Constructs a new Guesser.
 
         Args:
