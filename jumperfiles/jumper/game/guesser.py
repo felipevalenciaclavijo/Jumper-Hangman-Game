@@ -34,3 +34,6 @@ class Guesser:
         """
     
         return self._guesses
+
+    def reset_guesses(self):
+        self._guesses = []
