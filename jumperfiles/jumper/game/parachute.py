@@ -44,3 +44,9 @@ class Parachute:
 
     def cut_string(self):
         self._strings_cut += 1
+
+    def get_cut_strings(self):
+        return self._strings_cut
+
+    def reset_cut_strings(self):
+        self._strings_cut = 0
