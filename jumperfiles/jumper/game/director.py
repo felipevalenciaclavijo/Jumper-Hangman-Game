@@ -40,9 +40,10 @@ class Director:
 
         # self._word_line(self._word_generator.get_split_generated_word(), self._guesser.get_guesses())
         # self._terminal_service.write_text(self._parachute.get_parachute())
+
+        self._terminal_service.write_text("_ _ _ _ _")
+        self._terminal_service.write_text(self._parachute.get_parachute())
         while self._is_playing:
-            self._word_line(self._word_generator.get_split_generated_word(), self._guesser.get_guesses())
-            self._terminal_service.write_text(self._parachute.get_parachute())
             self._get_inputs()
             self._do_updates()
             self._do_outputs()
@@ -54,12 +55,17 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
+        
         guess = self._terminal_service.read_text("\nGuess a letter [a-z]:  \n")
         self._guesser.collect_guesses(guess)
 
 
     def play_again(self):
+        """Accepts a new guess from the user.
 
+        Args:
+            self (Director): An instance of Director.
+        """
         playing_answer = self._terminal_service.read_text("\nWould you like to play again? [y/n]: ")
         if playing_answer.lower() == "y":
             self._is_playing = True
@@ -70,9 +76,10 @@ class Director:
             self._guesser.reset_guesses()
             self._parachute.reset_cut_strings()
         else:
-            self._terminal_service.write_text("Thanks for playing!")
             self._is_playing = False
-        
+            self._terminal_service.write_text("Thanks for playing!")
+            
+
     def _do_updates(self):
         """Updates the parachute and the word line following guesses.
 
@@ -82,10 +89,7 @@ class Director:
         if self._guesser.get_guesses()[-1] not in self._word_generator.get_generated_word():
             self._parachute.cut_string()
 
-        if self._parachute.get_cut_strings() >= 5:
-            print()
-            print("Sad! You lose! :(")
-            self.play_again()
+        
         
     def _do_outputs(self):
         """Prints an instance of the Parachute.
@@ -98,8 +102,17 @@ class Director:
 
         self._terminal_service.write_text(self._parachute.get_parachute())
 
+        if self._parachute.get_cut_strings() >= 5:
+            print()
+            print("Sad! You lose! :(")
+            self.play_again()
+
     def _word_line(self, word_letters, guess_list):
-        
+        """Creates the visual cues for the length of the word and if the letters have been guessed correctly.
+
+        Args:
+            self (Director): An instance of Director.
+        """
         word_display = ""
         for letter in word_letters:
             if letter in guess_list:
@@ -114,13 +127,3 @@ class Director:
             print()
             print("Yay! You are a winner! :)")
             self.play_again()
-            self._word_generator = Word_generator()
-            self._guesser = Guesser()
-            self._terminal_service = TerminalService()
-            self._parachute = Parachute()
-            self._guesser.reset_guesses()
-            self._parachute.reset_cut_strings()
-        
-        
-
-    
