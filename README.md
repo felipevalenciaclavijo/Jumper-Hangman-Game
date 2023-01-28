@@ -1,5 +1,5 @@
 # Jumper-Hangman-Game
-Hangman game but with a parachute. This was developed by my team at CSE-210 Winter 2022 BYU-I University. It runs with Raylib in Python
+Hangman game but with a parachute. This was developed by my team at CSE-210 Winter 2022 BYU-I University.
 
 Authors
 * Logan Andrus lbandrus@byui.edu
